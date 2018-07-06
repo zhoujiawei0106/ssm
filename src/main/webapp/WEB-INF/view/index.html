@@ -12,12 +12,26 @@
     </head>
 
     <body>
-        <form action="LoginServlet" method="get">
-            姓名：<input type="text" name="name"><br/>
-            密码：<input type="password" name="pwd"><br/>
-            验证码：<input type="text" name="code">
-            <img id="codeImage" src="code"><a href="javascript:changeImage();">看不清</a><br/>
-            <input type="submit" value="登陆"><br/>
+        <form action="/login" method="post">
+            <div>
+                <label>用户名：</label>
+                <input type="text" name="loginName">
+            </div>
+            <div>
+                <label>密码：</label>
+                <input type="password" name="password">
+            </div>
+            <div>
+                <label>验证码：</label>
+                <input type="text" name="code">
+                <img id="codeImage" src="code">
+                    <a href="javascript:changeImage();"></a>
+                </img>
+            </div>
+            <div>
+                <input type="submit" value="登陆">
+                <input type="submit" value="注册">
+            </div>
         </form>
     </body>
 </html>

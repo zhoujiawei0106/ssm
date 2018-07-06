@@ -2,7 +2,9 @@ package cn.com.zjw.ssm.filter;
 
 import javax.imageio.ImageIO;
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.util.Random;
 /**
  * 登陆页面验证码filter
  */
-public class authCodeFilter implements Filter {
+public class AuthCodeFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig){
 
@@ -21,6 +23,7 @@ public class authCodeFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletResponse res = (HttpServletResponse)response;
+        HttpServletRequest req = (HttpServletRequest)request;
 
         // ☆1☆--相比纯java方式有变化的地方
         // 设置http响应头---告诉浏览器我现在发的是这个图片格式的数据，你用相应的方式来解析
@@ -42,6 +45,7 @@ public class authCodeFilter implements Filter {
 
         // 产生并draw出4个随机数字
         Random r = new Random();
+        String code = "";
         for (int i = 0; i < 4; i++) {
             int a = r.nextInt(10);// 生成0~9之间的随机整数
             int y = 15 + r.nextInt(20);// 产生随机的垂直位置
@@ -50,7 +54,12 @@ public class authCodeFilter implements Filter {
             g.setColor(c);
 
             g.drawString("" + a, i * 15, y);
+
+            code += a;
         }
+
+        HttpSession session = req.getSession();
+        session.setAttribute("code", code);
 
         // 画几条干扰线
         for (int i = 0; i < 10; i++) {

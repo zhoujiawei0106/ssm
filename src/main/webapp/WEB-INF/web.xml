@@ -36,14 +36,23 @@
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
+    <!-- 登陆验证码过滤器 -->
     <filter>
         <filter-name>authCodeFilter</filter-name>
-        <filter-class>cn.com.zjw.ssm.filter.authCodeFilter</filter-class>
+        <filter-class>cn.com.zjw.ssm.filter.AuthCodeFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>authCodeFilter</filter-name>
         <url-pattern>/code</url-pattern>
+    </filter-mapping>
+    <!-- 登陆验证过滤器 -->
+    <filter>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>cn.com.zjw.ssm.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>/login</url-pattern>
     </filter-mapping>
 
     <!-- 配置前端控制器-->
