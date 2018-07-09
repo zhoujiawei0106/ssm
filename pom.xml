@@ -21,6 +21,7 @@
         <mybatis-spring.version>1.2.1</mybatis-spring.version>
         <mybatis-ehcache.version>1.0.2</mybatis-ehcache.version>
         <!--<mysql-connector.version>5.0.5</mysql-connector.version>-->
+        <!--<oracle.version>14</oracle.version>-->
         <oracle.version>11.2.0.3</oracle.version>
         <druid.version>1.0.4</druid.version>
         <spring.version>4.1.6.RELEASE</spring.version>
@@ -39,12 +40,27 @@
         <repository>
             <id>aliyun</id>
             <name>aliyun</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <!--<url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
+            <url>https://mvnrepository.com/</url>
+
             <!--<releases>-->
                 <!--<enabled>true</enabled>-->
             <!--</releases>-->
             <!--<snapshots>-->
                 <!--<enabled>false</enabled>-->
+            <!--</snapshots>-->
+        </repository>
+        <repository>
+            <id>maven</id>
+            <name>maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <!--<url>https://mvnrepository.com/</url>-->
+
+            <!--<releases>-->
+            <!--<enabled>true</enabled>-->
+            <!--</releases>-->
+            <!--<snapshots>-->
+            <!--<enabled>false</enabled>-->
             <!--</snapshots>-->
         </repository>
     </repositories>
@@ -115,7 +131,6 @@
             <artifactId>spring-oxm</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
         <!-- Spring Dependencies end -->
 
         <dependency>
@@ -195,11 +210,16 @@
         <!--</dependency>-->
         <!--mysql end-->
         <!-- oracle dependencies -->
+        <!--<dependency>-->
+            <!--<groupId>com.oracle</groupId>-->
+            <!--<artifactId>ojdbc6</artifactId>-->
+            <!--<version>${oracle.version}</version>-->
+            <!--&lt;!&ndash;<scope>provided</scope>&ndash;&gt;-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
             <version>${oracle.version}</version>
-            <!--<scope>provided</scope>-->
         </dependency>
         <!--<dependency>-->
             <!--<groupId>ojdbc</groupId>-->
@@ -279,11 +299,18 @@
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
         </dependency>
+
         <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId></artifactId>
-            <version>2.4</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.6</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.6</version>
+        </dependency>
+
     </dependencies>
 
     <build>
