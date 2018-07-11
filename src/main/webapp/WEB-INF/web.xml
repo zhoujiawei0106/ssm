@@ -18,6 +18,9 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>cn.com.zjw.ssm.listener.SingleLoginListener</listener-class>
+    </listener>
 
     <!-- 配置Spring字符编码过滤器 -->
     <filter>
@@ -49,10 +52,14 @@
     <filter>
         <filter-name>loginFilter</filter-name>
         <filter-class>cn.com.zjw.ssm.filter.LoginFilter</filter-class>
+        <!--<init-param>-->
+            <!--<param-name>ignoreRequest</param-name>-->
+            <!--<param-value>login.jsp;index.html;/login;</param-value>-->
+        <!--</init-param>-->
     </filter>
     <filter-mapping>
         <filter-name>loginFilter</filter-name>
-        <url-pattern>/login</url-pattern>
+        <url-pattern>/view/*</url-pattern>
     </filter-mapping>
 
     <!-- 配置前端控制器-->
@@ -80,10 +87,10 @@
 
     <error-page>
         <error-code>404</error-code>
-        <location>/WEB-INF/view/index.html</location>
+        <location>/WEB-INF/view/static/error.html</location>
     </error-page>
     <welcome-file-list>
-        <welcome-file>/WEB-INF/view/index.html</welcome-file>
+        <welcome-file>/WEB-INF/view/static/login.jsp</welcome-file>
     </welcome-file-list>
     <session-config>
         <session-timeout>30</session-timeout>

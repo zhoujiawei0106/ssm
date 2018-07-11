@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.zjw.ssm.dao.UserMapper">
+
+    <resultMap id="userMap" type="cn.com.zjw.ssm.dto.UserInfo">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR"/>
+        <result  column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR"/>
+        <result  column="PASSWORD" property="password" jdbcType="VARCHAR"/>
+        <result  column="IP" property="ip" jdbcType="VARCHAR"/>
+        <result  column="LAST_LOGIN_DATE" property="lastLoginDate" jdbcType="TIMESTAMP"/>
+        <result  column="LOGIN_FAIL_TIMES" property="loginFailTimes" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getUser" resultMap="userMap">
+        SELECT
+            id,
+            user_name,
+            login_name,
+            password,
+            ip,
+            last_login_date,
+            login_fail_times
+        FROM
+            t_user
+        WHERE
+            login_name = #{loginName}
+    </select>
+</mapper>
