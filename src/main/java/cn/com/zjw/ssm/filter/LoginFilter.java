@@ -1,6 +1,7 @@
 package cn.com.zjw.ssm.filter;
 
 
+import cn.com.zjw.ssm.dao.UserMapper;
 import cn.com.zjw.ssm.dto.UserInfo;
 import cn.com.zjw.ssm.listener.SingleLoginListener;
 import cn.com.zjw.ssm.service.UserService;
@@ -34,12 +35,45 @@ public class LoginFilter implements Filter {
         HttpSession session = request.getSession();
 
         String url = request.getRequestURI();
+
+        // 如果是登陆的链接，直接校验用户
+        if (url.equals("/login")) {
+            // 用户名
+            String loginName = request.getParameter("loginName");
+            // 密码
+            String password = request.getParameter("password");
+            // 输入的验证码
+            String code = request.getParameter("code");
+
+            // 系统生成的验证码
+            String sessionCode = request.getSession().getAttribute("code").toString();
+
+            // 校验验证码
+            if (!sessionCode.equals(code)) {
+                request.setAttribute("msg", "验证码不正确，请重新输入");
+                response.sendRedirect(request.getContextPath() + "view/static/login.html");
+                return;
+            }
+
+            // 获取登陆的用户信息
+            UserInfo userInfo = SpringContextUtils.getBean(UserMapper.class).getUser(loginName);
+            if (userInfo == null) {
+                request.setAttribute("mag", "用户名或密码不正确");
+                return;
+            } else if (!userInfo.getLoginName().equals(loginName) || !userInfo.getPassword().equals(password)) {
+                request.setAttribute("mag", "用户名或密码不正确");
+                return;
+            }
+        }
+
         for (String paramUrl : excludeUrls) {
             // 如果直接访问登陆页面，或访问配置文件中配置的不过滤url不做处理
-            if (paramUrl.equals("login.jsp")) {
+            if (paramUrl.equals(url)) {
                 filterChain.doFilter(servletRequest, servletResponse);
+                return;
             } else if (url.indexOf(paramUrl) >= 0) {
                 filterChain.doFilter(servletRequest, servletResponse);
+                return;
             }
         }
 
@@ -48,8 +82,10 @@ public class LoginFilter implements Filter {
         // 登陆了，直接跳转到主页;
         if (isLogin) {
             request.getRequestDispatcher("index.html").forward(request, response);
+            return;
         } else {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("login.html").forward(request, response);
+            return;
         }
      }
 

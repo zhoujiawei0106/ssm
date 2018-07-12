@@ -50,7 +50,7 @@
         <filter-class>cn.com.zjw.ssm.filter.LoginFilter</filter-class>
         <init-param>
             <param-name>excludeUrls</param-name>
-            <param-value>login.jsp;/login;</param-value>
+            <param-value>/login.jsp;/code</param-value>
         </init-param>
     </filter>
     <filter-mapping>
@@ -83,10 +83,10 @@
 
     <!--<error-page>-->
         <!--<error-code>404</error-code>-->
-        <!--<location>/WEB-INF/view/static/error.html</location>-->
+        <!--<location>/view/static/error.html</location>-->
     <!--</error-page>-->
     <welcome-file-list>
-        <welcome-file>/WEB-INF/view/static/login.jsp</welcome-file>
+        <welcome-file>/view/static/login.html</welcome-file>
     </welcome-file-list>
     <session-config>
         <session-timeout>30</session-timeout>
