@@ -5,6 +5,7 @@ import cn.com.zjw.ssm.dao.UserMapper;
 import cn.com.zjw.ssm.dto.UserInfo;
 import cn.com.zjw.ssm.listener.SingleLoginListener;
 import cn.com.zjw.ssm.service.UserService;
+import cn.com.zjw.ssm.utils.JsonParseUtil;
 import cn.com.zjw.ssm.utils.SpringContextUtils;
 import org.codehaus.plexus.util.StringUtils;
 
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class LoginFilter implements Filter {
@@ -38,34 +41,42 @@ public class LoginFilter implements Filter {
         System.err.println(request.getRequestURI());
 
         // 如果是登陆的链接，直接校验用户
-//        if (url.equals("/login")) {
-//            // 用户名
-//            String loginName = request.getParameter("loginName");
-//            // 密码
-//            String password = request.getParameter("password");
-//            // 输入的验证码
-//            String code = request.getParameter("code");
-//
-//            // 系统生成的验证码
-//            String sessionCode = request.getSession().getAttribute("code").toString();
-//
-//            // 校验验证码
-//            if (!sessionCode.equals(code)) {
+        if (url.equals("/login")) {
+            // 用户名
+            String loginName = request.getParameter("loginName");
+            // 密码
+            String password = request.getParameter("password");
+            // 输入的验证码
+            String code = request.getParameter("code");
+
+            // 系统生成的验证码
+            String sessionCode = request.getSession().getAttribute("code").toString();
+
+            // 校验验证码
+            if (!sessionCode.equals(code)) {
 //                request.setAttribute("msg", "验证码不正确，请重新输入");
-//                response.sendRedirect(request.getContextPath() + "view/static/login.html");
-//                return;
-//            }
-//
-//            // 获取登陆的用户信息
-//            UserInfo userInfo = SpringContextUtils.getBean(UserMapper.class).getUser(loginName);
-//            if (userInfo == null) {
-//                request.setAttribute("mag", "用户名或密码不正确");
-//                return;
-//            } else if (!userInfo.getLoginName().equals(loginName) || !userInfo.getPassword().equals(password)) {
-//                request.setAttribute("mag", "用户名或密码不正确");
-//                return;
-//            }
-//        }
+//                response.sendRedirect(request.getContextPath() + "/static/login.html");
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("msg", "验证码不正确，请重新输入");
+                map.put("loginName", loginName);
+                map.put("password", password);
+                map.put("flag", false);
+
+                response.getWriter().write(JsonParseUtil.toJson(map));
+                request.getRequestDispatcher("/static/login.html").forward(request, response);
+                return;
+            }
+
+            // 获取登陆的用户信息
+            UserInfo userInfo = SpringContextUtils.getBean(UserMapper.class).getUser(loginName);
+            if (userInfo == null) {
+                request.setAttribute("mag", "用户名或密码不正确");
+                return;
+            } else if (!userInfo.getLoginName().equals(loginName) || !userInfo.getPassword().equals(password)) {
+                request.setAttribute("mag", "用户名或密码不正确");
+                return;
+            }
+        }
 
         for (String paramUrl : excludeUrls) {
             // 如果直接访问登陆页面，或访问配置文件中配置的不过滤url不做处理

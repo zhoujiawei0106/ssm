@@ -9,6 +9,29 @@
                 var img = document.getElementById("codeImage");
                 img.src = "code?" + new Date().getTime();
             }
+
+            var pathName = document.location.pathname;
+            var index = pathName.substr(1).indexOf("/");
+            var contentPaht = pathName.substr(0,index+1);
+            
+           function login() {
+               $.ajax({
+                   type: "POST",
+                   url: contentPaht + "/login",
+                   data: {
+                       loginName : $("#loginName").val(),
+                       password : $("#password").val(),
+                       code : $("#code").val()
+                   },
+                   dataType: "json",
+                   success: function(data){
+                       debugger;
+                   },
+                   error : function (XMLHttpRequest, textStatus, errorThrown) {
+                       debugger;
+                   }
+               });
+           }
         </script>
     </head>
 
@@ -16,21 +39,21 @@
         <form action="/login" method="post">
             <div>
                 <label>用户名：</label>
-                <input type="text" name="loginName">
+                <input id="loginName" type="text" name="loginName">
             </div>
             <div>
                 <label>密码：</label>
-                <input type="password" name="password">
+                <input id="password" type="password" name="password">
             </div>
             <div>
                 <label>验证码：</label>
-                <input type="text" name="code">
+                <input id="code" type="text" name="code">
                 <a href="javascript:changeImage();">
                     <img id="codeImage" src="code"/>
                 </a>
             </div>
             <div>
-                <input type="submit" value="登陆">
+                <input value="登陆" type="button" onclick="login();">
                 <input type="submit" value="注册">
             </div>
         </form>
