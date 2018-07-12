@@ -48,9 +48,10 @@
     <filter>
         <filter-name>loginFilter</filter-name>
         <filter-class>cn.com.zjw.ssm.filter.LoginFilter</filter-class>
+        <!-- 定义不被拦截的请求 -->
         <init-param>
             <param-name>excludeUrls</param-name>
-            <param-value>/login.jsp;/code</param-value>
+            <param-value>.js;.css;login.html;/code;</param-value>
         </init-param>
     </filter>
     <filter-mapping>
@@ -83,10 +84,10 @@
 
     <!--<error-page>-->
         <!--<error-code>404</error-code>-->
-        <!--<location>/view/static/error.html</location>-->
+        <!--<location>/static/error.html</location>-->
     <!--</error-page>-->
     <welcome-file-list>
-        <welcome-file>/view/static/login.html</welcome-file>
+        <welcome-file>/static/index.html</welcome-file>
     </welcome-file-list>
     <session-config>
         <session-timeout>30</session-timeout>

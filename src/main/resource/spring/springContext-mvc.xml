@@ -21,7 +21,8 @@
     <mvc:default-servlet-handler/>
 
     <!-- 配置静态文件，如html,js,css等文件 -->
-    <!--<mvc:resources mapping="/view/**" location="/WEB-INF/view/" />-->
+    <mvc:resources mapping="/view/**" location="/view/" />
+    <mvc:resources mapping="/js/**" location="/js/" />
 
     <!--&lt;!&ndash;避免IE执行AJAX时，返回JSON出现下载文件 &ndash;&gt;-->
     <!--<bean id="mappingJacksonHttpMessageConverter"-->
