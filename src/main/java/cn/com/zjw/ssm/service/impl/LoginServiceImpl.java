@@ -18,7 +18,7 @@ public class LoginServiceImpl implements LoginService {
     private UserMapper userMapper;
 
     @Override
-    public void loginCheck(HttpServletRequest request, Model model) {
+    public void loginCheck(HttpServletRequest request, Model model) throws Exception {
         // 用户名
         String loginName = request.getParameter("loginName");
         // 密码
@@ -32,17 +32,17 @@ public class LoginServiceImpl implements LoginService {
         // 校验验证码
         if (!sessionCode.equals(code)) {
             model.addAttribute("msg", "验证码不正确，请重新输入");
-            return;
+            throw new Exception("验证码不正确，请重新输入");
         }
 
         // 获取登陆的用户信息
         UserInfo userInfo = userMapper.getUser(loginName);
         if (userInfo == null) {
             model.addAttribute("mag", "用户名或密码不正确");
-            return;
+            throw new Exception("用户名或密码不正确");
         } else if (!userInfo.getLoginName().equals(loginName) || !userInfo.getPassword().equals(password)) {
             model.addAttribute("mag", "用户名或密码不正确");
-            return;
+            throw new Exception("用户名或密码不正确");
         }
     }
 }

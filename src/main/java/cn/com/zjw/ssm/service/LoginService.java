@@ -11,5 +11,5 @@ public interface LoginService {
      * @param request
      * @param model
      */
-    public void loginCheck(HttpServletRequest request, Model model);
+    public void loginCheck(HttpServletRequest request, Model model) throws Exception;
 }

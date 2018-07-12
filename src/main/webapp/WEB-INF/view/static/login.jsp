@@ -9,11 +9,22 @@
                 var img = document.getElementById("codeImage");
                 img.src = "code?" + new Date().getTime();
             }
+
+            function loadSuccess() {
+                if ($('#msg').val() != '') {
+                    $('#msg').show();
+                } else {
+                    $('#msg').hide();
+                }
+            }
         </script>
     </head>
 
-    <body>
+    <body onload="loadSuccess();">
         <form action="/login" method="post">
+            <div id="msg">
+                <label style="color: red">${msg}</label>
+            </div>
             <div>
                 <label>用户名：</label>
                 <input type="text" name="loginName">
@@ -25,9 +36,9 @@
             <div>
                 <label>验证码：</label>
                 <input type="text" name="code">
-                <img id="codeImage" src="code">
-                    <a href="javascript:changeImage();"></a>
-                </img>
+                <a href="javascript:changeImage();">
+                    <img id="codeImage" src="code"/>
+                </a>
             </div>
             <div>
                 <input type="submit" value="登陆">

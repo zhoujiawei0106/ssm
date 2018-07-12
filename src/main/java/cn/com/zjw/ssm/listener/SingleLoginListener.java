@@ -60,10 +60,8 @@ public class SingleLoginListener implements HttpSessionListener {
             }
             // 添加现在的sessionID和username
             userMap.put(session.getId(), loginName);
-            System.out.println("userMap = " + userMap);
         } else {// 如果该用户没登录过，直接添加现在的sessionID和username
             userMap.put(session.getId(), loginName);
-            System.out.println("userMap = " + userMap);
         }
     }
 }

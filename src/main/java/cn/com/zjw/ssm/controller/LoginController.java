@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class LoginController {
@@ -15,8 +16,7 @@ public class LoginController {
     private LoginService loginService;
 
     @RequestMapping("/login")
-    public String login(HttpServletRequest request, Model model) {
-        loginService.loginCheck(request, model);
-        return "static/login.jsp";
+    public String login(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+        return "static/index";
     }
 }
