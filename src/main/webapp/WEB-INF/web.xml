@@ -51,7 +51,10 @@
         <!-- 定义不被拦截的请求 -->
         <init-param>
             <param-name>excludeUrls</param-name>
-            <param-value>.js;.css;login.html;/code;</param-value>
+            <param-value>
+                .js;.css;.ico;.jpg;.png;login.html;
+                /code;
+            </param-value>
         </init-param>
     </filter>
     <filter-mapping>

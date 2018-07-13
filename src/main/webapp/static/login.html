@@ -2,60 +2,44 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>注册界面</title>
+        <title>登陆页面</title>
         <script type="text/javascript" src="/js/static/jquery/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript">
-            function changeImage() {
-                var img = document.getElementById("codeImage");
-                img.src = "code?" + new Date().getTime();
-            }
-
-            var pathName = document.location.pathname;
-            var index = pathName.substr(1).indexOf("/");
-            var contentPaht = pathName.substr(0,index+1);
-            
-           function login() {
-               $.ajax({
-                   type: "POST",
-                   url: contentPaht + "/login",
-                   data: {
-                       loginName : $("#loginName").val(),
-                       password : $("#password").val(),
-                       code : $("#code").val()
-                   },
-                   dataType: "json",
-                   success: function(data){
-                       debugger;
-                   },
-                   error : function (XMLHttpRequest, textStatus, errorThrown) {
-                       debugger;
-                   }
-               });
-           }
-        </script>
+        <script type="text/javascript" src="/js/static/common/login.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/login.css">
     </head>
-
-    <body>
-        <form action="/login" method="post">
-            <div>
-                <label>用户名：</label>
-                <input id="loginName" type="text" name="loginName">
-            </div>
-            <div>
-                <label>密码：</label>
-                <input id="password" type="password" name="password">
-            </div>
-            <div>
-                <label>验证码：</label>
-                <input id="code" type="text" name="code">
-                <a href="javascript:changeImage();">
-                    <img id="codeImage" src="code"/>
-                </a>
-            </div>
-            <div>
-                <input value="登陆" type="button" onclick="login();">
-                <input type="submit" value="注册">
-            </div>
-        </form>
+    <link rel="icon" href="/images/login_title_img_qiuqiu.jpg" type="image/x-icon"/>
+    <body onload="loadSuccess();">
+        <div class="imgDiv">
+            <img src="/images/login_title_img_qiuqiu.jpg" style="height: 250px;width: 250px"/>
+            <img src="/images/login_title_img_tiger.png" style="height: 250px;width: 250px"/>
+            <!--<div style="float: left;">-->
+            <!--</div>-->
+            <!--<div style="float: left;">-->
+            <!--</div>-->
+        </div>
+        <div class="imgForm">
+            <form action="/login" method="post">
+                <div id="msg" style="color: red;font-size: 15px;"></div>
+                <div class="inputDiv loginName">
+                    <label>用户名：</label>
+                    <input id="loginName" type="text">
+                </div>
+                <div class="inputDiv">
+                    <label>密码：</label>
+                    <input id="password" type="password">
+                </div>
+                <div class="inputDiv">
+                    <label>验证码：</label>
+                    <input id="code" type="text" style="width: 105px;">
+                    <a href="javascript:changeImage();">
+                        <img id="codeImage" src="code"/>
+                    </a>
+                </div>
+                <div class="btn">
+                    <input value="登陆" type="button" onclick="login();">
+                    <input type="submit" value="注册">
+                </div>
+            </form>
+        </div>
     </body>
 </html>

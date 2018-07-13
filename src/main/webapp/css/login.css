@@ -1,0 +1,33 @@
+.imgForm {
+    background-image:url(/images/login_midtopbg.png);
+    width: 553px;
+    height: 210px;
+    margin: 0 auto;
+}
+label {
+    color: #303030;
+    opacity: 0.6;
+}
+.inputDiv {
+    width: 400px;
+    height: 40px;
+    text-align: right;
+}
+.loginName {
+    padding-top: 40px;
+}
+input {
+    border-radius: 9px;
+}
+.btn {
+    width: 100px;
+    margin: 0 auto;
+    height: 25px;
+    padding-top: 10px;
+}
+.imgDiv {
+    width: 505px;
+    height: 250px;
+    margin: 0 auto;
+    padding-top: 10%;
+}

@@ -38,7 +38,6 @@ public class LoginFilter implements Filter {
         HttpSession session = request.getSession();
 
         String url = request.getRequestURI();
-        System.err.println(request.getRequestURI());
 
         // 如果是登陆的链接，直接校验用户
         if (url.equals("/login")) {
@@ -54,16 +53,9 @@ public class LoginFilter implements Filter {
 
             // 校验验证码
             if (!sessionCode.equals(code)) {
-//                request.setAttribute("msg", "验证码不正确，请重新输入");
-//                response.sendRedirect(request.getContextPath() + "/static/login.html");
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("msg", "验证码不正确，请重新输入");
-                map.put("loginName", loginName);
-                map.put("password", password);
-                map.put("flag", false);
-
+                Map<String, Object> map = this.failMap("验证码不正确，请重新输入");
+                response.setContentType("text/html;charset=UTF-8");
                 response.getWriter().write(JsonParseUtil.toJson(map));
-                request.getRequestDispatcher("/static/login.html").forward(request, response);
                 return;
             }
 
@@ -101,5 +93,20 @@ public class LoginFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    /**
+     * 验证失败的返回值
+     * @author zhoujiawei
+     * @param msg
+     * @return
+     */
+    private Map<String, Object> failMap(String msg) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("msg", "验证码不正确，请重新输入");
+//        map.put("loginName", loginName);
+//        map.put("password", password);
+        map.put("flag", false);
+        return map;
     }
 }
