@@ -1,6 +1,23 @@
+1、菜单
 <div class="row">
     <iframe th:src="${#httpServletRequest.getContextPath()}+'/url/commonUrls.htm'" onLoad="home.iFrameHeight();"
         scrolling="no" src="" id="mainFrame" name="mainFrame"
         style="width: 100%; height: 100%;scrolling: no;border:0;frameborder:0 ;marginwidth:0; marginheight:0;">
     </iframe>
 </div>
+
+2、配置quartz定时器
+
+3、整合easyui或bootstrap前台框架
+
+4、整合前后端分离框架
+
+5、文件导出上传，包含excel，图片
+
+6、邮件发送
+
+7、打印
+
+8、整合spring boot
+
+9、整合redius
