@@ -8,6 +8,9 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -59,7 +62,7 @@ public class AuthCodeFilter implements Filter {
         }
 
         HttpSession session = req.getSession();
-        session.setAttribute("code", code);
+        session.setAttribute("codeMap", codeMap(code));
 
         // 画几条干扰线
         for (int i = 0; i < 10; i++) {
@@ -78,5 +81,13 @@ public class AuthCodeFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    private static final Map<String, Object> codeMap(String code) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        Calendar calendar = Calendar.getInstance();
+        map.put("code", code);
+        map.put("time", calendar);
+        return map;
     }
 }

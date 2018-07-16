@@ -21,3 +21,5 @@
 8、整合spring boot
 
 9、整合redius
+
+10、国际化

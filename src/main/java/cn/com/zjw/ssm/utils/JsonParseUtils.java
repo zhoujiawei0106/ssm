@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author zhoujiawei
  * @date 2017年11月15日
  */
-public class JsonParseUtil {
+public class JsonParseUtils {
 
     private static ObjectMapper mapper;
 

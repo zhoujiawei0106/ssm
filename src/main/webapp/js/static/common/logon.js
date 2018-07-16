@@ -11,7 +11,8 @@ function changeImage() {
 
 // 页面加载完成
 function loadSuccess() {
-    $('#msg').hide();
+    $('#msg').show();
+    $('#msg').html("您已被强制登出，请重新登陆!");
 }
 
 // 登陆
@@ -47,7 +48,9 @@ function login() {
             }
         },
         error : function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log(XMLHttpRequest, textStatus, errorThrown);
+            console.log(XMLHttpRequest);
+            console.log(textStatus);
+            console.log(errorThrown);
             debugger;
         }
     });

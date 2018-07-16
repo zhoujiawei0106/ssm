@@ -29,10 +29,11 @@ public class SingleLoginListener implements HttpSessionListener {
      * @param session 登录的用户名称
      * @return boolean 该用户是否在线的标志
      */
-    public static boolean isOnline(HttpSession session) {
+    public static boolean isOnline(HttpSession session, String loginName) {
         boolean flag;
-        if (userMap.containsKey(session.getId())) {
+        if (userMap.containsValue(session.getId())) {
             flag = true;
+            isLogin(session, loginName);
         } else {
             flag = false;
         }
@@ -45,7 +46,7 @@ public class SingleLoginListener implements HttpSessionListener {
      * @param loginName
      * @return
      */
-    public static void isLogin(HttpSession session, String loginName) {
+    private static void isLogin(HttpSession session, String loginName) {
         // 如果该用户已经登录过，则使上次登录的用户掉线(依据使用户名是否在userMap中)
         if (userMap.containsValue(loginName)) {
             // 遍历原来的userMap，删除原用户名对应的sessionID(即删除原来的sessionID和username)
@@ -60,7 +61,7 @@ public class SingleLoginListener implements HttpSessionListener {
             }
             // 添加现在的sessionID和username
             userMap.put(session.getId(), loginName);
-        } else {// 如果该用户没登录过，直接添加现在的sessionID和username
+        } else { // 如果该用户没登录过，直接添加现在的sessionID和username
             userMap.put(session.getId(), loginName);
         }
     }
