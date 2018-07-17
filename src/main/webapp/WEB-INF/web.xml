@@ -53,7 +53,7 @@
             <param-name>excludeUrls</param-name>
             <param-value>
                 .js;.css;.ico;.jpg;.png;login.html;
-                /code;
+                /code;/languages;
             </param-value>
         </init-param>
     </filter>

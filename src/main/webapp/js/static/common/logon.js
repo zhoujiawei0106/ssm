@@ -15,6 +15,25 @@ function loadSuccess() {
     $('#msg').html("您已被强制登出，请重新登陆!");
 }
 
+// 登陆请求成功
+function loginSuccess(data) {
+    if (data.flag) {
+        window.location.href = "/index";
+    } else {
+        $('#msg').show();
+        $('#msg').html(data.msg);
+        $('#codeImage').click();
+    }
+}
+
+// 登陆请求失败
+function loginFail(XMLHttpRequest, textStatus, errorThrown) {
+    console.log(XMLHttpRequest);
+    console.log(textStatus);
+    console.log(errorThrown);
+    debugger;
+}
+
 // 登陆
 function login() {
     // 非空校验
@@ -29,29 +48,11 @@ function login() {
         $('#msg').html("请输入验证码");
     }
 
-    $.ajax({
-        type: "POST",
-        url: contentPaht + "/login",
-        data: {
-            loginName : $("#loginName").val(),
-            password : $("#password").val(),
-            code : $("#code").val()
-        },
-        dataType: "json",
-        success: function(data){
-            if (data.flag) {
-                window.location.href = "/index";
-            } else {
-                $('#msg').show();
-                $('#msg').html(data.msg);
-                $('#codeImage').click();
-            }
-        },
-        error : function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log(XMLHttpRequest);
-            console.log(textStatus);
-            console.log(errorThrown);
-            debugger;
-        }
-    });
+    var data = {
+        loginName : $("#loginName").val(),
+        password : $("#password").val(),
+        code : $("#code").val()
+    }
+
+    common.ajaxRequest("POST", contentPaht + "/login", data, loginSuccess, loginFail);
 }

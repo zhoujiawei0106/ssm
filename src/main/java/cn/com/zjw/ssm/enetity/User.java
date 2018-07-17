@@ -1,9 +1,9 @@
-package cn.com.zjw.ssm.dto;
+package cn.com.zjw.ssm.enetity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class UserInfo implements Serializable {
+public class User implements Serializable {
 
     private String id;
 

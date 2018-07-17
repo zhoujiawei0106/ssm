@@ -1,9 +1,9 @@
 package cn.com.zjw.ssm.dao;
 
-import cn.com.zjw.ssm.dto.UserInfo;
+import cn.com.zjw.ssm.enetity.User;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
 
-    public UserInfo getUser(@Param("loginName") String loginName);
+    public User getUser(@Param("loginName") String loginName);
 }

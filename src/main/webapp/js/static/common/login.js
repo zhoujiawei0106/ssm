@@ -11,44 +11,52 @@ function changeImage() {
 
 // 页面加载完成
 function loadSuccess() {
-    $('#msg').hide();
+    // $('#msg').hide();
+
+    // 获取系统支持的语言
+    common.ajaxRequest("POST", contentPaht + "/languages", "", languageData, common.errorFunction);
+}
+
+// 登陆请求成功
+function loginSuccess(data) {
+    if (data.flag) {
+        window.location.href = "/index";
+    } else {
+        $('#msg').show();
+        $('#msg').html(data.msg);
+        $('#codeImage').click();
+    }
 }
 
 // 登陆
 function login() {
     // 非空校验
-    if ($("#loginName").val() == '') {
+    if (common.isEmpty($("#loginName").val())) {
         $('#msg').show();
         $('#msg').html("请输入用户名");
-    } else if ($("#password").val() == '') {
+        return;
+    } else if (common.isEmpty($("#password").val())) {
         $('#msg').show();
         $('#msg').html("请输入密码");
-    } else if ($("#code").val() == '') {
+        return;
+    } else if (common.isEmpty($("#code").val() == '')) {
         $('#msg').show();
         $('#msg').html("请输入验证码");
+        return;
     }
 
-    $.ajax({
-        type: "POST",
-        url: contentPaht + "/login",
-        data: {
-            loginName : $("#loginName").val(),
-            password : $("#password").val(),
-            code : $("#code").val()
-        },
-        dataType: "json",
-        success: function(data){
-            if (data.flag) {
-                window.location.href = "/index";
-            } else {
-                $('#msg').show();
-                $('#msg').html(data.msg);
-                $('#codeImage').click();
-            }
-        },
-        error : function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log(XMLHttpRequest, textStatus, errorThrown);
-            debugger;
-        }
-    });
+    var data = {
+        loginName : $("#loginName").val(),
+        password : $("#password").val(),
+        code : $("#code").val()
+    }
+
+    common.ajaxRequest("POST", contentPaht + "/login", data, loginSuccess, common.errorFunction);
+}
+
+function languageData(data) {
+    for (var i in data) {
+        var option = "<option value='" + data[i].codeId + "'>"  + data[i].codeValue + "</option>";
+        $('#language').append(option);
+    }
 }

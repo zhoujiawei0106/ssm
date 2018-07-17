@@ -35,6 +35,13 @@ input {
     color: red;
     font-size: 15px;
     text-align: center;
-    padding-top: 15px;
+    /*padding-top: 15px;*/
+    height: 20px;
     margin-bottom: -25px;
+}
+.language {
+    float: right;
+    margin-right: 30px;
+    margin-top: 10px;
+    height: 25px;
 }

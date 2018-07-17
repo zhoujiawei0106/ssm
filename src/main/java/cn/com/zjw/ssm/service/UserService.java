@@ -1,8 +1,8 @@
 package cn.com.zjw.ssm.service;
 
-import cn.com.zjw.ssm.dto.UserInfo;
+import cn.com.zjw.ssm.enetity.User;
 
 public interface UserService {
 
-    public UserInfo getUserInfo(String loginName);
+    public User getUser(String loginName);
 }

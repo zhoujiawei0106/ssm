@@ -1,8 +1,8 @@
 package cn.com.zjw.ssm.filter;
 
 
-import cn.com.zjw.ssm.dao.UserMapper;
-import cn.com.zjw.ssm.dto.UserInfo;
+import cn.com.zjw.ssm.constants.CodeConstants;
+import cn.com.zjw.ssm.enetity.User;
 import cn.com.zjw.ssm.listener.SingleLoginListener;
 import cn.com.zjw.ssm.service.UserService;
 import cn.com.zjw.ssm.utils.JsonParseUtils;
@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class LoginFilter implements Filter {
 
@@ -84,17 +83,21 @@ public class LoginFilter implements Filter {
             }
 
             // 获取登陆的用户信息
-            UserInfo userInfo = SpringContextUtils.getBean(UserMapper.class).getUser(loginName);
-            if (userInfo == null) {
+            User user = SpringContextUtils.getBean(UserService.class).getUser(loginName);
+            if (user == null) {
                 Map<String, Object> map = this.failMap("用户名或密码不正确,请重新输入");
                 response.getWriter().write(JsonParseUtils.toJson(map));
                 return;
-            } else if (!userInfo.getLoginName().equals(loginName) || !userInfo.getPassword().equals(password)) {
+            } else if (!user.getLoginName().equals(loginName) || !user.getPassword().equals(password)) {
                 Map<String, Object> map = this.failMap("用户名或密码不正确,请重新输入");
                 response.getWriter().write(JsonParseUtils.toJson(map));
                 return;
             }
+
+            // 将获得的用户信息存放在session中
+            session.setAttribute(CodeConstants.SESSION_LOGIN_USER, user);
         }
+
 
         // 其他链接访问判断用户是否登陆了
         boolean isLogin = SingleLoginListener.isOnline(session, loginName);

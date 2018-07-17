@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>登陆页面</title>
-        <script type="text/javascript" src="/js/static/jquery/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="/js/static/common/logon.js"></script>
-        <link rel="stylesheet" type="text/css" href="/css/login.css">
-    </head>
-    <link rel="icon" href="/images/login_title_img_qiuqiu.jpg" type="image/x-icon"/>
-    <body onload="loadSuccess();">
-        <div class="imgDiv">
-            <img src="/images/login_title_img_qiuqiu.jpg" style="height: 250px;width: 250px"/>
-            <img src="/images/login_title_img_tiger.png" style="height: 250px;width: 250px"/>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>登陆</title>
+    <script type="text/javascript" src="/js/static/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/js/static/common/logon.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+</head>
+<link rel="icon" href="/images/login_title_img_qiuqiu.jpg" type="image/x-icon"/>
+<body onload="loadSuccess();">
+<div class="imgDiv">
+    <img src="/images/login_title_img_qiuqiu.jpg" style="height: 250px;width: 250px"/>
+    <img src="/images/login_title_img_tiger.png" style="height: 250px;width: 250px"/>
+</div>
+<div class="imgForm">
+    <form>
+        <div id="msg" class="msg"></div>
+        <div class="inputDiv loginName">
+            <label>用户名：</label>
+            <input id="loginName" type="text" name="loginName">
+            <select id="language" name="language" onload="loadData();" onclick="selectedData(this)"></select>
         </div>
-        <div class="imgForm">
-            <form action="/login" method="post">
-                <div id="msg" class="msg"></div>
-                <div class="inputDiv loginName">
-                    <label>用户名：</label>
-                    <input id="loginName" type="text">
-                </div>
-                <div class="inputDiv">
-                    <label>密码：</label>
-                    <input id="password" type="password">
-                </div>
-                <div class="inputDiv">
-                    <label>验证码：</label>
-                    <input id="code" type="text" style="width: 105px;">
-                    <a href="javascript:changeImage();">
-                        <img id="codeImage" src="code"/>
-                    </a>
-                </div>
-                <div class="btn">
-                    <input value="登陆" type="button" onclick="login();">
-                    <input type="submit" value="注册">
-                </div>
-            </form>
+        <div class="inputDiv">
+            <label>密码：</label>
+            <input id="password" type="password" name="pssword">
         </div>
-    </body>
+        <div class="inputDiv">
+            <label>验证码：</label>
+            <input id="code" type="text" style="width: 105px;" name="code">
+            <a href="javascript:changeImage();">
+                <img id="codeImage" src="code"/>
+            </a>
+        </div>
+        <div class="btn">
+            <input value="登陆" type="button" onclick="login();">
+            <input type="submit" value="注册">
+        </div>
+    </form>
+</div>
+</body>
 </html>
