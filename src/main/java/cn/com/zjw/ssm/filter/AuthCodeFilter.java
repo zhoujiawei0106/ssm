@@ -17,6 +17,15 @@ import java.util.Random;
  * 登陆页面验证码filter
  */
 public class AuthCodeFilter implements Filter {
+
+    public static void main(String[] args) {
+        Random random = new Random();
+        for (int i = 0; i < 50; i++) {
+            int num = random.nextInt(6);
+            System.out.println(num);
+        }
+    }
+
     @Override
     public void init(FilterConfig filterConfig){
 
@@ -34,7 +43,7 @@ public class AuthCodeFilter implements Filter {
 
         // 定义图片的宽和高
         int w = 60;
-        int h = 30;
+        int h = 21;
 
         // 声明一个RGB格式的内存中的图片
         BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
@@ -50,8 +59,11 @@ public class AuthCodeFilter implements Filter {
         Random r = new Random();
         String code = "";
         for (int i = 0; i < 4; i++) {
-            int a = r.nextInt(10);// 生成0~9之间的随机整数
-            int y = 15 + r.nextInt(20);// 产生随机的垂直位置
+            // 生成0~9之间的随机整数
+            int a = r.nextInt(10);
+            // 产生随机的垂直位置
+            int y = 15 + r.nextInt(6);
+//            int y = 18;
             // 产生随机颜色
             Color c = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256));
             g.setColor(c);
@@ -65,13 +77,13 @@ public class AuthCodeFilter implements Filter {
         session.setAttribute("codeMap", codeMap(code));
 
         // 画几条干扰线
-        for (int i = 0; i < 10; i++) {
-            // 产生随机颜色
-            Color c = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256));
-            g.setColor(c);
-            g.drawLine(r.nextInt(60), r.nextInt(30), r.nextInt(60),
-                    r.nextInt(30));
-        }
+//        for (int i = 0; i < 10; i++) {
+//            // 产生随机颜色
+//            Color c = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256));
+//            g.setColor(c);
+//            g.drawLine(r.nextInt(60), r.nextInt(30), r.nextInt(60),
+//                    r.nextInt(30));
+//        }
 
         g.dispose();// 类似于IO中的flush(),把图形数据刷到img中
         // 把内存图片img对象保存到一个jpg文件

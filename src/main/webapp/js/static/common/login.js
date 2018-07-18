@@ -11,7 +11,7 @@ function changeImage() {
 
 // 页面加载完成
 function loadSuccess() {
-    // $('#msg').hide();
+    $('#msg').hide();
 
     // 获取系统支持的语言
     common.ajaxRequest("POST", contentPaht + "/languages", "", languageData, common.errorFunction);
@@ -23,7 +23,7 @@ function loginSuccess(data) {
         window.location.href = "/index";
     } else {
         $('#msg').show();
-        $('#msg').html(data.msg);
+        $('#msg').html("<lable>" + data.msg +"</lable>");
         $('#codeImage').click();
     }
 }

@@ -14,7 +14,7 @@ label {
     text-align: right;
 }
 .loginName {
-    padding-top: 40px;
+    padding-top: 30px;
 }
 input {
     border-radius: 9px;
@@ -23,7 +23,7 @@ input {
     width: 100px;
     margin: 0 auto;
     height: 25px;
-    padding-top: 10px;
+    padding-top: 5px;
 }
 .imgDiv {
     width: 505px;
@@ -35,9 +35,7 @@ input {
     color: red;
     font-size: 15px;
     text-align: center;
-    /*padding-top: 15px;*/
-    height: 20px;
-    margin-bottom: -25px;
+    padding-top: 5px;
 }
 .language {
     float: right;

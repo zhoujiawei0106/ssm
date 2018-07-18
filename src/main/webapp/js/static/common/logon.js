@@ -13,6 +13,9 @@ function changeImage() {
 function loadSuccess() {
     $('#msg').show();
     $('#msg').html("您已被强制登出，请重新登陆!");
+
+    // 获取系统支持的语言
+    common.ajaxRequest("POST", contentPaht + "/languages", "", languageData, common.errorFunction);
 }
 
 // 登陆请求成功
@@ -21,31 +24,26 @@ function loginSuccess(data) {
         window.location.href = "/index";
     } else {
         $('#msg').show();
-        $('#msg').html(data.msg);
+        $('#msg').html("<lable>" + data.msg +"</lable>");
         $('#codeImage').click();
     }
-}
-
-// 登陆请求失败
-function loginFail(XMLHttpRequest, textStatus, errorThrown) {
-    console.log(XMLHttpRequest);
-    console.log(textStatus);
-    console.log(errorThrown);
-    debugger;
 }
 
 // 登陆
 function login() {
     // 非空校验
-    if ($("#loginName").val() == '') {
+    if (common.isEmpty($("#loginName").val())) {
         $('#msg').show();
         $('#msg').html("请输入用户名");
-    } else if ($("#password").val() == '') {
+        return;
+    } else if (common.isEmpty($("#password").val())) {
         $('#msg').show();
         $('#msg').html("请输入密码");
-    } else if ($("#code").val() == '') {
+        return;
+    } else if (common.isEmpty($("#code").val() == '')) {
         $('#msg').show();
         $('#msg').html("请输入验证码");
+        return;
     }
 
     var data = {
@@ -54,5 +52,12 @@ function login() {
         code : $("#code").val()
     }
 
-    common.ajaxRequest("POST", contentPaht + "/login", data, loginSuccess, loginFail);
+    common.ajaxRequest("POST", contentPaht + "/login", data, loginSuccess, common.errorFunction);
+}
+
+function languageData(data) {
+    for (var i in data) {
+        var option = "<option value='" + data[i].codeId + "'>"  + data[i].codeValue + "</option>";
+        $('#language').append(option);
+    }
 }
