@@ -52,7 +52,6 @@ public class LoginFilter implements Filter {
             }
         }
 
-
         boolean flag = false;
         // 用户名
         String loginName = request.getParameter("loginName");
@@ -112,7 +111,7 @@ public class LoginFilter implements Filter {
         } else {
             // 为true时，登陆验证通过
             if (!flag) {
-                request.getRequestDispatcher("/WEB-INF/views/static/login.html").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/static/error.html").forward(request, response);
                 return;
             }
         }
