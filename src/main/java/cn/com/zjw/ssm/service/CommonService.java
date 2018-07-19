@@ -1,6 +1,6 @@
 package cn.com.zjw.ssm.service;
 
-import cn.com.zjw.ssm.enetity.SystemParam;
+import cn.com.zjw.ssm.entity.SystemParam;
 
 import java.util.List;
 

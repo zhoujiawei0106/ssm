@@ -1,4 +1,4 @@
-package cn.com.zjw.ssm.enetity;
+package cn.com.zjw.ssm.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

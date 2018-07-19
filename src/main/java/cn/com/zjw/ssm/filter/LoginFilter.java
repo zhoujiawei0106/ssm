@@ -2,7 +2,7 @@ package cn.com.zjw.ssm.filter;
 
 
 import cn.com.zjw.ssm.constants.CodeConstants;
-import cn.com.zjw.ssm.enetity.User;
+import cn.com.zjw.ssm.entity.User;
 import cn.com.zjw.ssm.listener.SingleLoginListener;
 import cn.com.zjw.ssm.service.UserService;
 import cn.com.zjw.ssm.utils.JsonParseUtils;
@@ -42,6 +42,7 @@ public class LoginFilter implements Filter {
 
         // 当前访问的路径
         String url = request.getRequestURI();
+        System.err.println("===============================" + url);
 
         for (String paramUrl : excludeUrls) {
             // 如果直接访问登陆页面，或访问配置文件中配置的不过滤url不做处理
@@ -51,6 +52,8 @@ public class LoginFilter implements Filter {
             }
         }
 
+
+        boolean flag = false;
         // 用户名
         String loginName = request.getParameter("loginName");
         // 如果是登陆的链接，直接校验用户
@@ -96,20 +99,25 @@ public class LoginFilter implements Filter {
 
             // 将获得的用户信息存放在session中
             session.setAttribute(CodeConstants.SESSION_LOGIN_USER, user);
+            flag = true;
         }
-
 
         // 其他链接访问判断用户是否登陆了
         boolean isLogin = SingleLoginListener.isOnline(session, loginName);
         // 登陆了，直接跳转到主页;
         if (isLogin) {
-            request.getRequestDispatcher("index.html").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/static/index.html").forward(request, response);
+            filterChain.doFilter(servletRequest, servletResponse);
             return;
         } else {
-            request.getRequestDispatcher("login.html").forward(request, response);
-            return;
+            // 为true时，登陆验证通过
+            if (!flag) {
+                request.getRequestDispatcher("/WEB-INF/views/static/login.html").forward(request, response);
+                return;
+            }
         }
-     }
+        filterChain.doFilter(servletRequest, servletResponse);
+    }
 
     @Override
     public void destroy() {

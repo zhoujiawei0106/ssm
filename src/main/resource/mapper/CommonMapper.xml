@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.zjw.ssm.dao.CommonMapper">
 
-    <resultMap id="systemParamMap" type="cn.com.zjw.ssm.enetity.SystemParam">
+    <resultMap id="systemParamMap" type="cn.com.zjw.ssm.entity.SystemParam">
         <id column="CODE_ID" property="codeId" jdbcType="INTEGER"/>
         <id column="CODE_TYPE" property="codeType" jdbcType="VARCHAR"/>
         <result column="CODE_VALUE" property="codeValue" jdbcType="VARCHAR"/>

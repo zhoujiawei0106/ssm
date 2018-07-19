@@ -1,7 +1,7 @@
 package cn.com.zjw.ssm.controller.common;
 
 import cn.com.zjw.ssm.controller.BaseController;
-import cn.com.zjw.ssm.enetity.SystemParam;
+import cn.com.zjw.ssm.entity.SystemParam;
 import cn.com.zjw.ssm.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

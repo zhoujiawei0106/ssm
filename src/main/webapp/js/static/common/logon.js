@@ -21,7 +21,7 @@ function loadSuccess() {
 // 登陆请求成功
 function loginSuccess(data) {
     if (data.flag) {
-        window.location.href = "/index";
+        window.location.href = contentPaht + data.data;
     } else {
         $('#msg').show();
         $('#msg').html("<lable>" + data.msg +"</lable>");

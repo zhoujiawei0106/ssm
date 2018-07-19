@@ -1,22 +1,25 @@
 package cn.com.zjw.ssm.controller;
 
-import cn.com.zjw.ssm.enetity.SystemParam;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * 登陆
  */
 @Controller
-public class LoginController {
+public class LoginController extends BaseController {
 
     @RequestMapping("/login")
-    public String login() throws Exception {
+    @ResponseBody
+    public Map<String, Object> login() throws Exception {
+        return success("/index");
+    }
+
+    @RequestMapping("/index")
+    public String index() throws Exception {
         return "static/index";
     }
 }

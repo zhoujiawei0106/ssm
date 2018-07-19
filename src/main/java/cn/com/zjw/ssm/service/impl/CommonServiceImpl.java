@@ -2,7 +2,7 @@ package cn.com.zjw.ssm.service.impl;
 
 import cn.com.zjw.ssm.constants.CodeConstants;
 import cn.com.zjw.ssm.dao.CommonMapper;
-import cn.com.zjw.ssm.enetity.SystemParam;
+import cn.com.zjw.ssm.entity.SystemParam;
 import cn.com.zjw.ssm.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

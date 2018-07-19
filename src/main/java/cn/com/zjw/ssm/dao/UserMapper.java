@@ -1,6 +1,6 @@
 package cn.com.zjw.ssm.dao;
 
-import cn.com.zjw.ssm.enetity.User;
+import cn.com.zjw.ssm.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {

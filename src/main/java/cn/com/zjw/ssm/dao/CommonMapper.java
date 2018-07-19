@@ -1,6 +1,6 @@
 package cn.com.zjw.ssm.dao;
 
-import cn.com.zjw.ssm.enetity.SystemParam;
+import cn.com.zjw.ssm.entity.SystemParam;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
