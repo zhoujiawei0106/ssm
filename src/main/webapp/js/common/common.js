@@ -102,12 +102,13 @@ var common = {
      * @param successFunction 成功执行方法
      * @param errorFunction 失败执行方法
      */
-	ajaxRequest : function (type, url, data, successFunction, errorFunction) {
+	ajaxRequest : function (type, url, data, async, successFunction, errorFunction) {
         $.ajax({
             type: type,
             url: url,
             data: data,
             dataType: "json",
+			async: async,
             success: function(data){
                 successFunction(data);
             },

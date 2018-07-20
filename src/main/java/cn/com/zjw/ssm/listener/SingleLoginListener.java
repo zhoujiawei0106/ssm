@@ -1,5 +1,7 @@
 package cn.com.zjw.ssm.listener;
 
+import org.codehaus.plexus.util.StringUtils;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -9,7 +11,7 @@ import java.util.Map;
 
 public class SingleLoginListener implements HttpSessionListener {
 
-    private static Map userMap = new HashMap();
+    private static Map<String, String> userMap = new HashMap<String, String>();
 
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
@@ -30,12 +32,17 @@ public class SingleLoginListener implements HttpSessionListener {
      * @return boolean 该用户是否在线的标志
      */
     public static boolean isOnline(HttpSession session, String loginName) {
-        boolean flag;
+        boolean flag = false;
+
+        // 如果不是登陆或者从未登陆过，loginName才会为空
+        if (session == null || StringUtils.isBlank(loginName)) {
+            return flag;
+        }
+
         if (userMap.containsValue(session.getId())) {
             flag = true;
+        } else if (StringUtils.isNotBlank(loginName)) {
             isLogin(session, loginName);
-        } else {
-            flag = false;
         }
         return flag;
     }
@@ -49,13 +56,13 @@ public class SingleLoginListener implements HttpSessionListener {
     private static void isLogin(HttpSession session, String loginName) {
         // 如果该用户已经登录过，则使上次登录的用户掉线(依据使用户名是否在userMap中)
         if (userMap.containsValue(loginName)) {
-            // 遍历原来的userMap，删除原用户名对应的sessionID(即删除原来的sessionID和username)
+            // 遍历原来的userMap，删除原用户名对应的sessionID(即删除原来的sessionID和loginName)
             Iterator iter = userMap.entrySet().iterator();
             while (iter.hasNext()) {
                 Map.Entry entry = (Map.Entry) iter.next();
                 Object key = entry.getKey();
                 Object val = entry.getValue();
-                if (((String)val).equals(loginName)) {
+                if (((String)val).equals(loginName) && userMap.containsKey(session.getId())) {
                     userMap.remove(key);
                 }
             }
