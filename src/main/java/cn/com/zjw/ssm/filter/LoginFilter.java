@@ -7,8 +7,8 @@ import cn.com.zjw.ssm.listener.SingleLoginListener;
 import cn.com.zjw.ssm.service.UserService;
 import cn.com.zjw.ssm.utils.JsonParseUtils;
 import cn.com.zjw.ssm.utils.SpringContextUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.codehaus.plexus.util.StringUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -108,8 +108,15 @@ public class LoginFilter implements Filter {
                 // 将获得的用户信息存放在session中
                 session.setAttribute(CodeConstants.SESSION_LOGIN_USER, user);
                 flag = true;
+                // 登陆成功后修改用户的map
+                SingleLoginListener.login(session, loginName);
             }
 
+            // 既不是登陆请求，也没有登陆过
+            if (StringUtils.isBlank(loginName)) {
+                request.getRequestDispatcher("/WEB-INF/views/static/login.html").forward(request, response);
+                return;
+            }
             // 其他链接访问判断用户是否登陆了
             logger.warn("------------------loginName=" + loginName);
             boolean isLogin = SingleLoginListener.isOnline(session, loginName);

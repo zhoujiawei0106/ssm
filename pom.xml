@@ -36,7 +36,8 @@
         <servlet.version>3.0.1</servlet.version>
         <generator.version>1.3.2</generator.version>
         <redis.version>2.5.1</redis.version>
-        <quartz.vaersion>2.3.0</quartz.vaersion>
+        <quartz.version>2.3.0</quartz.version>
+        <apache.common.version>3.7</apache.common.version>
     </properties>
 
     <repositories>
@@ -308,9 +309,16 @@
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>${quartz.vaersion}</version>
+            <version>${quartz.version}</version>
         </dependency>
         <!-- quartz定时器 end -->
+
+        <!-- apache common -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache.common.version}</version>
+        </dependency>
     </dependencies>
 
     <!--<distributionManagement>-->
