@@ -47,7 +47,6 @@ public class LoginFilter implements Filter {
 
             // 当前访问的路径
             String url = request.getRequestURI();
-            logger.warn("===============================" + url);
 
             for (String paramUrl : excludeUrls) {
                 // 如果直接访问登陆页面，或访问配置文件中配置的不过滤url不做处理
@@ -57,7 +56,6 @@ public class LoginFilter implements Filter {
                 }
             }
 
-            boolean flag = false;
             // 用户名
             String loginName = request.getParameter("loginName");
             if (StringUtils.isBlank(loginName) && session.getAttribute(CodeConstants.SESSION_LOGIN_USER) != null) {
@@ -81,14 +79,14 @@ public class LoginFilter implements Filter {
                 response.setContentType("text/html;charset=UTF-8");
 
                 if (calendar.compareTo(nowTime) < 0) {
-                    Map<String, Object> map = this.failMap("验证码已过期,请重新输入");
+                    Map<String, Object> map = failMap("验证码已过期,请重新输入");
                     response.getWriter().write(JsonParseUtils.toJson(map));
                     return;
                 }
 
                 // 校验验证码
                 if (!sessionCode.equals(code)) {
-                    Map<String, Object> map = this.failMap("验证码不正确,请重新输入");
+                    Map<String, Object> map = failMap("验证码不正确,请重新输入");
                     response.getWriter().write(JsonParseUtils.toJson(map));
                     return;
                 }
@@ -96,18 +94,17 @@ public class LoginFilter implements Filter {
                 // 获取登陆的用户信息
                 User user = SpringContextUtils.getBean(UserService.class).getUser(loginName);
                 if (user == null) {
-                    Map<String, Object> map = this.failMap("用户名或密码不正确,请重新输入");
+                    Map<String, Object> map = failMap("用户名或密码不正确,请重新输入");
                     response.getWriter().write(JsonParseUtils.toJson(map));
                     return;
                 } else if (!user.getLoginName().equals(loginName) || !user.getPassword().equals(password)) {
-                    Map<String, Object> map = this.failMap("用户名或密码不正确,请重新输入");
+                    Map<String, Object> map = failMap("用户名或密码不正确,请重新输入");
                     response.getWriter().write(JsonParseUtils.toJson(map));
                     return;
                 }
 
                 // 将获得的用户信息存放在session中
                 session.setAttribute(CodeConstants.SESSION_LOGIN_USER, user);
-                flag = true;
                 // 登陆成功后修改用户的map
                 SingleLoginListener.login(session, loginName);
             }
@@ -117,19 +114,17 @@ public class LoginFilter implements Filter {
                 request.getRequestDispatcher("/WEB-INF/views/static/login.html").forward(request, response);
                 return;
             }
-            // 其他链接访问判断用户是否登陆了
-            logger.warn("------------------loginName=" + loginName);
-            boolean isLogin = SingleLoginListener.isOnline(session, loginName);
-            logger.error("------------------isLogin=" + isLogin);
-            // 登陆了，直接跳转到主页;
-            if (isLogin) {
-                request.getRequestDispatcher("/WEB-INF/views/static/index.html").forward(request, response);
-            } else {
-                // 为true时，登陆验证通过
-                if (!flag) {
-                    request.getRequestDispatcher("/WEB-INF/views/static/login.html").forward(request, response);
-                    return;
-                }
+
+            // 如果没有登陆，跳转到login页面
+            if (!SingleLoginListener.isLogin(session, loginName)) {
+                request.getRequestDispatcher("/WEB-INF/views/static/login.html").forward(request, response);
+                return;
+            }
+
+            // 如果有用户在线了，跳转到logon(重新登陆)页面
+            if (!SingleLoginListener.isOnline(session, loginName)) {
+                request.getRequestDispatcher("/WEB-INF/views/static/logon.html").forward(request, response);
+                return;
             }
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (Exception e) {
@@ -148,7 +143,7 @@ public class LoginFilter implements Filter {
      * @param msg
      * @return
      */
-    private Map<String, Object> failMap(String msg) {
+    private static final Map<String, Object> failMap(String msg) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("msg", msg);
         map.put("flag", false);

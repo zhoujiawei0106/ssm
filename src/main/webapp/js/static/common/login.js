@@ -2,7 +2,7 @@
 var pathName = document.location.pathname;
 var index = pathName.substr(1).indexOf("/");
 var contentPath = pathName.substr(0,index+1);
-var flag = true;
+// var flag = true;
 
 // 验证码图片刷新
 function changeImage() {
@@ -20,8 +20,11 @@ function loadSuccess() {
 
 // 登陆请求成功
 function loginSuccess(data) {
+    console.log(data.flag);
+    console.log(data.data);
     if (data.flag) {
-        flag = true;
+        window.location.href = contentPath + data.data;
+        // flag = true;
         return true;
     } else {
         $('#msg').show();
@@ -55,9 +58,9 @@ function login() {
 
     common.ajaxRequest("POST", contentPath + "/login", data, false, loginSuccess, common.errorFunction);
 
-    if (flag) {
-        window.location.href = contentPath + data.data;
-    }
+    // if (flag) {
+    //     window.location.href = contentPath + data.data;
+    // }
 }
 
 function languageData(data) {

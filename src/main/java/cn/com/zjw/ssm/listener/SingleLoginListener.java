@@ -27,32 +27,30 @@ public class SingleLoginListener implements HttpSessionListener {
 
     /**
      * 判断用户是否在线
-     *
      * @param session
+     * @param loginName 用户名
      * @return boolean 该用户是否在线的标志
      */
     public static boolean isOnline(HttpSession session, String loginName) {
-        // 如果userMap中存有loginName，需要进行下一步判断
-        if (userMap.containsValue(loginName)) {
-            // 如果当前的sessionId不存在于userMap，或当前的sessionId在userMap中的value和loginName不匹配
-            if (!userMap.containsKey(session.getId()) || !(userMap.get(session.getId()).equals(loginName))) {
+        // 如果userMap中存有sessionId并且对应的value和loginName相同
+        if (StringUtils.isNotBlank(userMap.get(session.getId())) && userMap.get(session.getId()).equals(loginName)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 判断用户是否登陆
+     * @param session
+     * @param loginName 用户名
+     * @return boolean 该用户是否登陆的标志
+     */
+    public static boolean isLogin(HttpSession session, String loginName) {
+        if (userMap.containsKey(session.getId())) {
+            if (userMap.get(session.getId()) == "" || userMap.get(session.getId()).equals(loginName)) {
                 return true;
             }
         }
-//        boolean flag = false;
-
-//        if (userMap.containsKey(session.getId()) && userMap.get(session.getId()).equals(loginName)) {
-//            flag = true;
-//        } else if (userMap.containsKey(session.getId()) && !userMap.get(session.getId()).equals(loginName)) {
-//            flag = false;
-//        }
-
-//        if (userMap.containsValue(session.getId())) {
-//            flag = true;
-//            isLogin(session, loginName);
-//        } else if (StringUtils.isNotBlank(loginName)) {
-//            flag = false;
-//        }
         return false;
     }
 
@@ -63,18 +61,19 @@ public class SingleLoginListener implements HttpSessionListener {
      * @return
      */
     public static void login(HttpSession session, String loginName) {
-        // 如果该用户已经登录过，则使上次登录的用户掉线(依据使用户名是否在userMap中)
+        // 如果该用户已经登录过
         if (userMap.containsValue(loginName)) {
-            // 遍历原来的userMap，删除原用户名对应的sessionID(即删除原来的sessionID和loginName)
+            // 将所有userMap中的loginName滞空
             for(String key : userMap.keySet()) {
                 String val = userMap.get(key);
                 if (((String)val).equals(loginName)) {
-                    userMap.remove(key);
+                    userMap.put(key, "");
                 }
             }
-            // 添加现在的sessionID和username
+            // 添加新的的sessionId和loginName
             userMap.put(session.getId(), loginName);
-        } else { // 如果该用户没登录过，直接添加现在的sessionID和username
+        } else {
+            // 如果该用户没登录过，直接添加新的sessionId和loginName
             userMap.put(session.getId(), loginName);
         }
     }
