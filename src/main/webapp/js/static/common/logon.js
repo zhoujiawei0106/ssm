@@ -22,7 +22,7 @@ function loadSuccess() {
 // 登陆请求成功
 function loginSuccess(data) {
     if (data.flag) {
-        flag = true;
+        window.location.href = contentPath + data.data;
         return true;
     } else {
         $('#msg').show();
@@ -55,10 +55,6 @@ function login() {
     }
 
     common.ajaxRequest("POST", contentPaht + "/login", data, false, loginSuccess, common.errorFunction);
-
-    if (flag) {
-        window.location.href = contentPaht + data.data;
-    }
 }
 
 function languageData(data) {

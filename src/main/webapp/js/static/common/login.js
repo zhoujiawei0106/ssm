@@ -24,7 +24,6 @@ function loginSuccess(data) {
     console.log(data.data);
     if (data.flag) {
         window.location.href = contentPath + data.data;
-        // flag = true;
         return true;
     } else {
         $('#msg').show();
@@ -57,10 +56,6 @@ function login() {
     }
 
     common.ajaxRequest("POST", contentPath + "/login", data, false, loginSuccess, common.errorFunction);
-
-    // if (flag) {
-    //     window.location.href = contentPath + data.data;
-    // }
 }
 
 function languageData(data) {
