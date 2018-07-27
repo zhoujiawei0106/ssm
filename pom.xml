@@ -38,6 +38,7 @@
         <redis.version>2.5.1</redis.version>
         <quartz.version>2.3.0</quartz.version>
         <apache.common.version>3.7</apache.common.version>
+        <pagehelper.version>5.0.0</pagehelper.version>
     </properties>
 
     <repositories>
@@ -275,6 +276,13 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
+        </dependency>
+
+        <!-- 分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>${pagehelper.version}</version>
         </dependency>
 
         <!--file-->

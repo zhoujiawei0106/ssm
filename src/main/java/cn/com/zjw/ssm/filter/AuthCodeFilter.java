@@ -18,24 +18,27 @@ import java.util.Random;
  */
 public class AuthCodeFilter implements Filter {
 
+    private static final String[] codeArr = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C","D", "E",
+             "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+
     public static void main(String[] args) {
         Random random = new Random();
-        for (int i = 0; i < 50; i++) {
-            int num = random.nextInt(6);
+        for (int i = 0; i < 5000; i++) {
+            int num = random.nextInt(36);
             System.out.println(num);
         }
     }
 
     @Override
-    public void init(FilterConfig filterConfig){
+    public void init(FilterConfig filterConfig) {
 
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
-        HttpServletResponse res = (HttpServletResponse)response;
-        HttpServletRequest req = (HttpServletRequest)request;
+        HttpServletResponse res = (HttpServletResponse) response;
+        HttpServletRequest req = (HttpServletRequest) request;
 
         // ☆1☆--相比纯java方式有变化的地方
         // 设置http响应头---告诉浏览器我现在发的是这个图片格式的数据，你用相应的方式来解析
@@ -60,7 +63,7 @@ public class AuthCodeFilter implements Filter {
         String code = "";
         for (int i = 0; i < 4; i++) {
             // 生成0~9之间的随机整数
-            int a = r.nextInt(10);
+            String str = codeArr[r.nextInt(36)];
             // 产生随机的垂直位置
             int y = 15 + r.nextInt(6);
 //            int y = 18;
@@ -68,9 +71,9 @@ public class AuthCodeFilter implements Filter {
             Color c = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256));
             g.setColor(c);
 
-            g.drawString("" + a, i * 15, y);
+            g.drawString(str, i * 15, y);
 
-            code += a;
+            code += str;
         }
 
         HttpSession session = req.getSession();

@@ -67,7 +67,7 @@ public class LoginFilter implements Filter {
                 // 密码
                 String password = request.getParameter("password");
                 // 输入的验证码
-                String code = request.getParameter("code");
+                String code = request.getParameter("code").toUpperCase();
 
                 // 系统生成的验证码
                 Map<String, Object> codeMap = (Map)request.getSession().getAttribute("codeMap");
