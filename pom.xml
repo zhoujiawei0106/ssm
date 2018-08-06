@@ -22,7 +22,7 @@
         <mybatis-ehcache.version>1.0.2</mybatis-ehcache.version>
         <!--<mysql-connector.version>5.0.5</mysql-connector.version>-->
         <oracle.version>11.2.0.3</oracle.version>
-        <druid.version>1.0.4</druid.version>
+        <druid.version>1.1.9</druid.version>
         <spring.version>4.1.6.RELEASE</spring.version>
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.5</slf4j.version>
@@ -68,6 +68,11 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+        <groupId>org.webjars.bower</groupId>
+        <artifactId>vue</artifactId>
+        <version>2.5.16</version>
+        </dependency>
         <!-- Spring dependencies-->
         <dependency>
             <groupId>org.springframework</groupId>
