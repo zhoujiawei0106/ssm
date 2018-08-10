@@ -52,7 +52,7 @@
         <init-param>
             <param-name>excludeUrls</param-name>
             <param-value>
-                .js;.css;.ico;.jpg;.png;login.html;logon.html
+                .js;.css;.ico;.jpg;.png;login.html;logon.html;
                 /code;/languages;
             </param-value>
         </init-param>
